@@ -60,7 +60,7 @@ public class SellaFbController {
 	@PostMapping(path = "/webhook", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> getMessage(@RequestBody final String payLoad,
 			@RequestHeader(SIGNATURE_HEADER_NAME) final String signature) {
-		logger.info("<<<<<<<<<Response payload:{} && signature: {}>>>>>>>>>>", payLoad, signature);
+		logger.info("<<<<<<<<<FaceBookResponse payload:{}>>>>>>>>>>", payLoad);
 		RequestPayload reqPayload=getResponseObject(payLoad);
 		logger.info("<<<<<<<<<<<<<<<<reqpayload>>>>{}>>>>>>>>>>>>>",reqPayload);
 		final String senderId = reqPayload.getEntry().get(0).getMessaging().get(0).getSender().getId();
