@@ -35,13 +35,12 @@ import it.sella.model.im.PollResponse;
 import it.sella.model.im.Result;
 
 
-
 @RestController
 public class SellaFbController {
 	Map<String, BotSession> botSessionMap = new HashMap<String, BotSession>();
     //https://sella.it/sellabot/chatinit?nome=nome1&cognome=cognome1&email=test@sella.it&CHANNEL=Sella_sito_free
 	private static final String SIGNATURE_HEADER_NAME = "X-Hub-Signature";
-	private static final String ACCESS_TOKEN = "EAADwyglYT3gBACIGJ5VroCVMAiZAtbW2zsKihP6iClcAeCDrPgusQQNuI6jPvEshBF0TgwW2CzVRIQZCf5ZC6uYe8CXMTY8cnat4OfBgJzsWZAZCRDWaw9N29ZCsy2KZCcCS5mvRmooIkbB3TclHrJIAZAah0SPJTVJ2g2ZB9fExG9w0QmPyWRyQR";
+	private static final String ACCESS_TOKEN = "EAAdhnk9we7oBAGQgeIyTPqExUQe2saSgqZCt6fcEAOHComoXGVy6PSS6jZBz96GzsisBhMrKlNZCK025WJ4jMjFxFri3Oy6jg09JxABe8T46WYzxCsyt1N1m6MJkHP8M6zewNV6H0E1NhftPmJZCfRgVzY019mfuBHJkFjCSehMBPuOXVAoD";
 	private static final String FB_GRAPH_API_URL_MESSAGES = "https://graph.facebook.com/v2.6/me/messages?access_token=%s";
 	private static final String IM_LOGIN_URL = "https://sella.it/sellabot/chatinit?nome=%s&cognome=%s&email=test3@sella.it&CHANNEL=Sella_sito_free";
 	private static final String CHAT_URL="https://sella.it/sellabot/execute/user/chat";
