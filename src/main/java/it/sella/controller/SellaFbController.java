@@ -56,6 +56,7 @@ public class SellaFbController {
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 	}
 	
+	
 	@PostMapping(path = "/webhook", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> getMessage(@RequestBody final String payLoad,
 			@RequestHeader(SIGNATURE_HEADER_NAME) final String signature) {
