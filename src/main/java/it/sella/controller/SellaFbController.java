@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +21,10 @@ import org.springframework.web.client.RestTemplate;
 
 import it.sella.BotSession;
 import it.sella.JsonUtil;
+import it.sella.QnaResponse;
 import it.sella.model.Entry;
 import it.sella.model.Messaging;
 import it.sella.model.RequestPayload;
-import it.sella.model.SendMessageAcknowledgement;
 import it.sella.model.UserDetail;
 import it.sella.model.im.ChatResponse;
 import it.sella.model.im.Eventdatum;
@@ -67,54 +66,22 @@ public class SellaFbController {
 		final String recipientId = reqPayload.getEntry().get(0).getMessaging().get(0).getRecipient().getId();
 		logger.info("<<<<<<<<<<senderId>>>>{},RecipientId>>>{}>>>>>>>>>>>>>>>", senderId, recipientId);
 		final UserDetail userDetail = getUserDetail(senderId);
-		String eventType=getEventType(reqPayload);		
-		BotSession botSession=null;		
-		if(botSessionMap.containsKey(recipientId)) {
-			botSession = (BotSession) botSessionMap.get(recipientId);
-			logger.info("<<<<<<<<<<<<<<<botsession available>>>>>>>>>>>>>>>>>");
-		}else {
-			ResponseEntity<String> imLoginResponseEntity = imLogin(userDetail);
-			if (imLoginResponseEntity.getStatusCode() != HttpStatus.FOUND) {
-				logger.info("<<<<<<<<<<Login failed>>>>>>>>>");
-			} else {
-				logger.info("<<<<<<<<<<Loggedin successfully>>>>>>>>>");
-				botSession = new BotSession();
-				botSession.setFbReceipientId(recipientId);
-				botSession.setFbSenderId(senderId);
-				botSession.setImChatId(getChatId(imLoginResponseEntity.getHeaders().getFirst("Set-Cookie")));
-				botSession.setCokkieInfo(imLoginResponseEntity.getHeaders().getFirst("Set-Cookie"));
-				botSessionMap.put(recipientId, botSession);
-			}
-			
-		}
-		
+		String eventType=getEventType(reqPayload);	
 		for (Entry entry : reqPayload.getEntry()) {
 			for (Messaging messaging : entry.getMessaging()) {
 				final String textMessage = eventType.equals("PostbackEvent") ? messaging.getPostback().getPayload()	: messaging.getMessage().getText();
 				logger.info("<<<<<<<<<<<<TextMessage::{},EventyType:::{}>>>>>>>>>>>>>>", textMessage, eventType);
-				logger.info("<<<<<<<<<<<<BotSession ::{}>>>>>>>>>>>>>", botSession);
 				String senderActionAcknowledge = sendMessage(getSenderActionResonse("mark_seen", senderId));
 				logger.info("<<<<<<<<<<senderActionAcknowledge::::{}>>>>>>>>>>>>", senderActionAcknowledge);
 				senderActionAcknowledge = sendMessage(getSenderActionResonse("typing_on", senderId));
 				logger.info("<<<<<<<<<<<<<senderActionAcknowledge::::{}>>>>>>>>>>>>>>", senderActionAcknowledge);
-				logger.info("<<<<<<<<<<<<<ChatId As of Now::::{}>>>>>>>>>>>>>>", botSession.getImChatId());
+				logger.info("<<<<<<<<<<<<<Actual message sending started>>>>>>>>>>>>>>");
 				try {
-					getPollResponse(senderId, botSession.getImChatId(),botSession.getCokkieInfo().concat("hello"),1);
+					sendMessage(QnaResponse.getJsonResponse(senderId, textMessage!=null?textMessage.toLowerCase():"",userDetail));
 
 				}catch(Exception e) {
-					logger.info("thi is the error we got::{}",e.getMessage(),e);
-				}
-				ChatResponse chatResponse = sendImMessage(botSession.getImChatId(), textMessage, botSession.getCokkieInfo()).getBody();
-				logger.info("<<<<<<<<<ChatResponse:::{}",chatResponse);
-				if(chatResponse.getStatus().equals("EXCEPTION")) {
-					final String chatId = getChatId(botSession.getCokkieInfo());
-	            	botSession.setImChatId(chatId);
-	            	botSessionMap.put(recipientId, botSession);
-	            	logger.info("<<<<<<Newww chatId:::{}>>>>>>>",chatId);
-	            	sendImMessage(chatId, textMessage, botSession.getCokkieInfo());
-	            }
-				getPollResponse(senderId, botSession.getImChatId(), botSession.getCokkieInfo(), 10);
-				// sendMessage(QnaResponse.getJsonResponse(senderId,textMessage!=null?textMessage.toLowerCase():"",userDetail));
+					logger.info("thiS is the error demo bot caught::{}",e.getMessage(),e);
+				}				
 				senderActionAcknowledge = sendMessage(getSenderActionResonse("typing_off", senderId));
 				logger.info("senderActionAcknowledge>>>>{}", senderActionAcknowledge);
 			}
@@ -240,9 +207,6 @@ public class SellaFbController {
 				e.printStackTrace();
 			}
 		}
-	}	
-	
-
-	
+	}		
 	
 }
