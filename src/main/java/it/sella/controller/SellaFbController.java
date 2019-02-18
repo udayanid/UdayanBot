@@ -40,7 +40,7 @@ public class SellaFbController {
 	Map<String, BotSession> botSessionMap = new HashMap<String, BotSession>();
     //https://sella.it/sellabot/chatinit?nome=nome1&cognome=cognome1&email=test@sella.it&CHANNEL=Sella_sito_free
 	private static final String SIGNATURE_HEADER_NAME = "X-Hub-Signature";
-	private static final String ACCESS_TOKEN = "EAAdhnk9we7oBAFVzS1E4yUiqQjTpKuooirIO67Iyt6ly8UBSPRqi0U95QVxwgV4CaKj6ZBQYSZBvZA0fvG8rhkbApGhggrg4rPFyGNRRRF6DXRfZAEusKdkSTgiXmutB4SI6q2zj0lrSGHkLJl1oMSAHzmiCzZBkURUdem5t1HwykG02gOZAgy";
+	private static final String ACCESS_TOKEN = "EAAg3VtGDoZAQBAI0c7bCqw6n1OVo65fRxlBcdJjZCvndYt0qGgfQwVwQ4kwdk4ZCRNHiYIEVZBTCcVtLd99VthsU42RRvZBuWqX01ar9I2kH0W6put3ZBuiigaPFZB1MZAGoJZB6EGaBrusIj6xZAboUQZAd6XF3CgFZC4eXT1nteYJEhKPjLgdkzyAK";
 	private static final String FB_GRAPH_API_URL_MESSAGES = "https://graph.facebook.com/v2.6/me/messages?access_token=%s";
 	private static final String IM_LOGIN_URL = "https://sella.it/sellabot/chatinit?nome=%s&cognome=%s&email=test3@sella.it&CHANNEL=Sella_sito_free";
 	private static final String CHAT_URL="https://sella.it/sellabot/execute/user/chat";
@@ -51,7 +51,7 @@ public class SellaFbController {
 	public ResponseEntity<?> verify(@RequestParam("hub.challenge") String challenge,
 			@RequestParam("hub.verify_token") String token) {
 		logger.info("<<<<<<<<<<<<<Challenge is:{} and token is {}>>>>>>>>>>>", challenge, token);
-		if (token.equals("sellatoken123"))
+		if (token.equals("demotoken123"))
 			return new ResponseEntity<String>(challenge, HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
