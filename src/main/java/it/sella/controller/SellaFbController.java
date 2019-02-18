@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import it.sella.BotSession;
 import it.sella.JsonUtil;
-import it.sella.QnaResponse;
+import it.sella.QnaResponse1;
 import it.sella.model.Entry;
 import it.sella.model.Messaging;
 import it.sella.model.RequestPayload;
@@ -78,7 +78,7 @@ public class SellaFbController {
 				logger.info("<<<<<<<<<<<<<senderActionAcknowledge::::{}>>>>>>>>>>>>>>", senderActionAcknowledge);
 				logger.info("<<<<<<<<<<<<<Actual message sending started>>>>>>>>>>>>>>");
 				try {
-					sendMessage(QnaResponse.getJsonResponse(senderId, textMessage!=null?textMessage.toLowerCase():"",userDetail));
+					sendMessage(QnaResponse1.getJsonResponse(senderId, textMessage!=null?textMessage.toLowerCase():"",userDetail));
 
 				}catch(Exception e) {
 					logger.info("thiS is the error demo bot caught::{}",e.getMessage(),e);
