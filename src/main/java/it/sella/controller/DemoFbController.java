@@ -68,25 +68,25 @@ public class DemoFbController {
 		logger.info("<<<<<<<<<<senderId>>>>{},RecipientId>>>{}>>>>>>>>>>>>>>>", senderId, recipientId);
 		final UserDetail userDetail = getUserDetail(senderId);
 		String eventType=getEventType(reqPayload);	
-//		for (Entry entry : reqPayload.getEntry()) {
-//			for (Messaging messaging : entry.getMessaging()) {
-//				final String textMessage = eventType.equals("PostbackEvent") ? messaging.getPostback().getPayload()	: messaging.getMessage().getText();
-//				logger.info("<<<<<<<<<<<<TextMessage::{},EventyType:::{}>>>>>>>>>>>>>>", textMessage, eventType);
-//				String senderActionAcknowledge = sendMessage(getSenderActionResonse("mark_seen", senderId));
-//				logger.info("<<<<<<<<<<senderActionAcknowledge::::{}>>>>>>>>>>>>", senderActionAcknowledge);
-//				senderActionAcknowledge = sendMessage(getSenderActionResonse("typing_on", senderId));
-//				logger.info("<<<<<<<<<<<<<senderActionAcknowledge::::{}>>>>>>>>>>>>>>", senderActionAcknowledge);
-//				logger.info("<<<<<<<<<<<<<Actual message sending started>>>>>>>>>>>>>>");
-//				try {
-//					sendMessage(QnaResponse1.getJsonResponse(senderId, textMessage!=null?textMessage.toLowerCase():"",userDetail));
-//
-//				}catch(Exception e) {
-//					logger.info("thiS is the error demo bot caught::{}",e.getMessage(),e);
-//				}				
-//				senderActionAcknowledge = sendMessage(getSenderActionResonse("typing_off", senderId));
-//				logger.info("senderActionAcknowledge>>>>{}", senderActionAcknowledge);
-//			}
-//		}		
+		for (Entry entry : reqPayload.getEntry()) {
+			for (Messaging messaging : entry.getMessaging()) {
+				final String textMessage = eventType.equals("PostbackEvent") ? messaging.getPostback().getPayload()	: messaging.getMessage().getText();
+				logger.info("<<<<<<<<<<<<TextMessage::{},EventyType:::{}>>>>>>>>>>>>>>", textMessage, eventType);
+				String senderActionAcknowledge = sendMessage(getSenderActionResonse("mark_seen", senderId));
+				logger.info("<<<<<<<<<<senderActionAcknowledge::::{}>>>>>>>>>>>>", senderActionAcknowledge);
+				senderActionAcknowledge = sendMessage(getSenderActionResonse("typing_on", senderId));
+				logger.info("<<<<<<<<<<<<<senderActionAcknowledge::::{}>>>>>>>>>>>>>>", senderActionAcknowledge);
+				logger.info("<<<<<<<<<<<<<Actual message sending started>>>>>>>>>>>>>>");
+				try {
+					sendMessage(QnaResponse1.getJsonResponse(senderId, textMessage!=null?textMessage.toLowerCase():"",userDetail));
+
+				}catch(Exception e) {
+					logger.info("thiS is the error demo bot caught::{}",e.getMessage(),e);
+				}				
+				senderActionAcknowledge = sendMessage(getSenderActionResonse("typing_off", senderId));
+				logger.info("senderActionAcknowledge>>>>{}", senderActionAcknowledge);
+			}
+		}		
 		return new ResponseEntity<String>("Success", HttpStatus.OK);
 	}
 	
