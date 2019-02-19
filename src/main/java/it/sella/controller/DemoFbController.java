@@ -35,17 +35,17 @@ import it.sella.model.im.Result;
 
 
 @RestController
-public class SellaFbController {
+public class DemoFbController {
 	Map<String, BotSession> botSessionMap = new HashMap<String, BotSession>();
     //https://sella.it/sellabot/chatinit?nome=nome1&cognome=cognome1&email=test@sella.it&CHANNEL=Sella_sito_free
 	private static final String SIGNATURE_HEADER_NAME = "X-Hub-Signature";
-	private static final String ACCESS_TOKEN = "EAAg3VtGDoZAQBAI0c7bCqw6n1OVo65fRxlBcdJjZCvndYt0qGgfQwVwQ4kwdk4ZCRNHiYIEVZBTCcVtLd99VthsU42RRvZBuWqX01ar9I2kH0W6put3ZBuiigaPFZB1MZAGoJZB6EGaBrusIj6xZAboUQZAd6XF3CgFZC4eXT1nteYJEhKPjLgdkzyAK";
+	private static final String ACCESS_TOKEN = "EAAg3VtGDoZAQBAOQ4sdXLzh5phbd2OZAuHTi1nOb70Wtx1G4JPtkgZBffFXZBihFrhna3ZA6paaw9Jv0ZA2jqprCQewKxJTDwwK8JVp1CjZCNI18PDoJcLavVoZCVhXfjsmKEz7MD0EwmXWEcclMZBEc7igGt01ZAFQ93ZAf62pC21RZBovEg1PjBUSK";
 	private static final String FB_GRAPH_API_URL_MESSAGES = "https://graph.facebook.com/v2.6/me/messages?access_token=%s";
 	private static final String IM_LOGIN_URL = "https://sella.it/sellabot/chatinit?nome=%s&cognome=%s&email=test3@sella.it&CHANNEL=Sella_sito_free";
 	private static final String CHAT_URL="https://sella.it/sellabot/execute/user/chat";
     private static final String POLL_URL="https://sella.it/sellabot/execute/user/poll";
 
-	private static final Logger logger = LoggerFactory.getLogger(SellaFbController.class);
+	private static final Logger logger = LoggerFactory.getLogger(DemoFbController.class);
 	@GetMapping("/webhook")
 	public ResponseEntity<?> verify(@RequestParam("hub.challenge") String challenge,
 			@RequestParam("hub.verify_token") String token) {
